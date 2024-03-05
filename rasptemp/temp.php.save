@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Temperatura do termômetro</title>
+	<meta charset="utf-8">
+	<style>
+		body {
+			text-align: center;
+			font-size: 48px;
+		}
+	</style>
+</head>
+<body>
+	<?php
+
+		// Inclua o arquivo PHPMailerAutoload.php
+require_once('vendor/autoload.php');
+$mail = new PHPMailer\PHPMailer\PHPMailer();
+
+//recolhendo os dados
+$nome	= $_POST['nome'];
+$email	= $_POST['email'];
+$tempmin = $_POST['tempmin'];
+$tempmax = $_POST['tempmax'];
+
+
+// Configure as informações do servidor SMTP
+$mail->isSMTP();
+$mail->Host = 'smtp.gbsinformatica.com.br';
+$mail->SMTPAuth = true;
+$mail->Username = 'flavio.faria@gbsinformatica.com.br';
+$mail->Password = 'gbsinf/T6&/9iF/01';
+$mail->SMTPSecure = 'tls';
+$mail->Port = 587;
+
+
+$temp = $_POST['temp'];;
+if ($temp <= $tempmin || $temp >= $tempmax) {
+ 
+    $mail->setFrom('flavio.faria@gbsinformatica.com.br');
+$mail->addAddress($email);
+
+
+$mail->Subject = 'RESPOSTA FORMULARIO DE CONTATO';
+$mail->Body = 'Olá ' . $nome . ' o seu termometro está: ' . $temp;
+}
+
+//diz se o enviou o email
+if(!$mail->send()) {
+    echo 'Erro ao enviar o email: ' . $mail->ErrorInfo;
+} else {
+    echo 'Email enviado com sucesso!';
+}
+
+		$temp = exec("python read_temp.py");
+	?>
+	<h1>Temperatura atual: <?php echo $temp; ?>&deg;C</h1>
+</body>
+</html>
+

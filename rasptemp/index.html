@@ -1,0 +1,57 @@
+
+<html>
+	<head>
+		<title>RaspTemp</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="div"></div>
+			<div class="container">
+				<div class="title">
+					<p><h1>RaspTemp</h1></p>
+				</div>
+				<div class="content">
+						<form action="temp.php" name="FormularioEnvia" method="POST" onsubmit="sendForm(event)">
+
+						<div class="input">
+							<label>Nome:</label>
+							<input type="text" name="nome" id="label1" class="nome"><br>
+						</div>
+						
+						<div class="input">
+							<label>E-mail:</label>
+							<input type="text" name="email" id="label2" class="email"><br>
+						</div>
+						
+						<div class="input">
+							<label>Temperatura minima:</label>
+							<input type="text" name="tempmin" id="label3" class="tempmin"><br>
+						</div>
+						
+						<div class="input">
+							<label>Temperatura maxima:</label>
+							<input type="text" name="tempmax" id="label4" class="tempmax"><br>
+						</div>
+						
+						<div class="btn">
+							<button type="submit" id="button">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="div"></div>
+		<script>
+function sendForm(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  fetch('tempenviar.php', {
+    method: 'POST',
+    body: formData
+  });
+  event.target.submit();
+}
+</script>
+		<script src="main.js"></script>
+	</body>
+</html>
